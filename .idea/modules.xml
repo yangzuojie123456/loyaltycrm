@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/loyalty-crm-server/loyalty-crm-server.iml" filepath="$PROJECT_DIR$/loyalty-crm-server/loyalty-crm-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loyaltycrm.iml" filepath="$PROJECT_DIR$/loyaltycrm.iml" />
+    </modules>
+  </component>
+</project>
