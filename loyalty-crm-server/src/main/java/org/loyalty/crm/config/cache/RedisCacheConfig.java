@@ -35,7 +35,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Bean
     public CacheManager cacheManager(RedisTemplate<?, ?> redisTemplate) {
         CacheManager cacheManager = new RedisCacheManager(redisTemplate);
-        returncacheManager;
+        return cacheManager;
     }
 
 
@@ -63,7 +63,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         //     redisTemplate.setKeySerializer(redisSerializer);
         //     redisTemplate.setHashKeySerializer(redisSerializer);
 
-        returnredisTemplate;
+        return redisTemplate;
     }
 
 }
