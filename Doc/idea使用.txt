@@ -1,2 +1,3 @@
-//自动生成 uuid
+//自动生成 uuid ALT+ENTER
 https://my.oschina.net/tonycody/blog/289994
+//格式化 CTRL+ALT+L
