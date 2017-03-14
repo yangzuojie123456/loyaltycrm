@@ -1,0 +1,9 @@
+ 集成shiro大概分这么一个步骤：
+
+(a) pom.xml中添加Shiro依赖；
+
+(b) 注入Shiro Factory和SecurityManager。
+
+(c) 身份认证
+
+(d) 权限控制
