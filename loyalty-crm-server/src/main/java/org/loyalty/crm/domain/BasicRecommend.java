@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class BasicRecommend{
+import java.io.Serializable;
+
+public class BasicRecommend implements Serializable {
 }

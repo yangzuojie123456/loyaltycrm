@@ -1,3 +1,6 @@
 package org.loyalty.crm.domain;
-public class EvaluationKey{
+
+import java.io.Serializable;
+
+public class EvaluationKey implements Serializable {
 }

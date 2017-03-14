@@ -1,5 +1,7 @@
 package org.loyalty.crm.domain;
 
-public class EvaluationTestPaper{
+import java.io.Serializable;
+
+public class EvaluationTestPaper implements Serializable {
 
 }

@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class SysPoint{
+import java.io.Serializable;
+
+public class SysPoint implements Serializable {
 }

@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class BasicTestAnswer{
+import java.io.Serializable;
+
+public class BasicTestAnswer implements Serializable {
 }

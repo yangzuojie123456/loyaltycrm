@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class SysManager{
+import java.io.Serializable;
+
+public class SysManager implements Serializable {
 }

@@ -2,7 +2,11 @@ package org.loyalty.crm.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class BasicArticle{
+import java.io.Serializable;
+
+public class BasicArticle implements Serializable{
+
+    private static final long serialVersionUID = -8345291947189875363L;
 
     public Long getId() {
         return id;

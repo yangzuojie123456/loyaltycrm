@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class CrmUser{
+import java.io.Serializable;
+
+public class CrmUser implements Serializable {
 }

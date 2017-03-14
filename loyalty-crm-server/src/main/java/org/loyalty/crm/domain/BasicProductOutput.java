@@ -1,4 +1,6 @@
 package org.loyalty.crm.domain;
 
-public class BasicProductOutput{
+import java.io.Serializable;
+
+public class BasicProductOutput implements Serializable {
 }

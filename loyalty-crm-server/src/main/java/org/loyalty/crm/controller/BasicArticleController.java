@@ -38,7 +38,8 @@ public class BasicArticleController {
    @RequestParam(name = "page", defaultValue = "1") int page,
    @RequestParam(name = "rows", defaultValue = "10") int rows) {
         Map<String,Object> maps = new HashMap<String, Object>();
-        //maps.put("title","保险产品");
+        maps.put("page",page);
+        maps.put("rows",rows);
         PageHelper.startPage(page, rows);
         List<BasicArticle> articleList = basicArticleService.findAllArticle(maps);
         return new Response().success(articleList);

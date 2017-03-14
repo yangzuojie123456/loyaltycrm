@@ -1,6 +1,11 @@
 package org.loyalty.crm.domain;
 
-public class BasicCompany{
+import java.io.Serializable;
+
+public class BasicCompany implements Serializable{
+
+    private static final long serialVersionUID = -3142115181246806235L;
+
     public Long getId() {
         return id;
     }

@@ -1,2 +1,45 @@
 http://blog.didispace.com/springbootredis/?utm_source=tuicool&utm_medium=referral
+http://www.cnblogs.com/softidea/p/5801499.html
 Spring Boot中使用Redis数据库
+启动：redis-server.exe redis.windows.conf
+redis清空
+进入redis目录下
+redis-cli
+flushall
+
+
+缓存数据一致性保证
+CRUD (Create 创建，Retrieve 读取，Update 更新，Delete 删除) 操作中，
+除了 R 具备幂等性，其他三个发生的时候都可能会造成缓存结果和数据库不一致。
+为了保证缓存数据的一致性，在进行 CUD 操作的时候我们需要对可能影响到的缓存进行更新或者清除
+例子：
+// C
+@CacheEvict(value = { "provinceCities"}, allEntries = true)
+public void insertCity(String city_code, String city_jb,
+        String province_code, String city_name,
+        String city, String province) {
+    City cityBean = new City();
+    cityBean.setCityCode(city_code);
+    cityBean.setCityJb(city_jb);
+    cityBean.setProvinceCode(province_code);
+    cityBean.setCityName(city_name);
+    cityBean.setCity(city);
+    cityBean.setProvince(province);
+    this.cityMapper.insertCity(cityBean);
+}
+// U
+@CacheEvict(value = { "provinceCities", "searchCity" }, allEntries = true)
+public int renameCity(String city_code, String city_name) {
+    City city = new City();
+    city.setCityCode(city_code);
+    city.setCityName(city_name);
+    this.cityMapper.renameCity(city);
+    return 1;
+}
+
+// D
+@CacheEvict(value = { "provinceCities", "searchCity" }, allEntries = true)
+public int deleteCity(String city_code) {
+    this.cityMapper.deleteCity(city_code);
+    return 1;
+}
