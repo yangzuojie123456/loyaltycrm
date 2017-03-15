@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.loyalty.crm.domain.BasicCompany;
 import org.loyalty.crm.domain.response.Response;
 import org.loyalty.crm.service.BasicCompanyService;
@@ -30,6 +31,7 @@ public class BasicCompanyController {
     @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "当前页码", required = false, dataType = "int"),
             @ApiImplicitParam(name = "rows", value = "每页条数", required = false, dataType = "int") })
     @RequestMapping(value = "/api/company", method = RequestMethod.GET)
+    @RequiresPermissions("company:view")//权限管理;
     public Response findAllCompany(Model model,
                                    @RequestParam(name = "page", defaultValue = "1") int page,
                                    @RequestParam(name = "rows", defaultValue = "10") int rows) {

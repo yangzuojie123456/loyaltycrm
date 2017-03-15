@@ -1,6 +1,7 @@
 package org.loyalty.crm.controller.manager;
 
 
+import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,10 @@ public class HomeController {
             } else if ("kaptchaValidateFailed".equals(exception)) {
                 System.out.println("kaptchaValidateFailed -- > 验证码错误");
                 msg = "kaptchaValidateFailed -- > 验证码错误";
-            } else {
+            }else if (ExcessiveAttemptsException.class.getName().equals(exception)) {
+                System.out.println("ExcessiveAttemptsException -- > 登录失败次数过多：");
+                msg = "ExcessiveAttemptsException -- > 登录失败次数过多：";
+            }   else {
                 msg = "else >> "+exception;
                 System.out.println("else -- >" + exception);
             }

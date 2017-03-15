@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.loyalty.crm.domain.BasicArticle;
 import org.loyalty.crm.domain.response.Response;
 import org.loyalty.crm.service.BasicArticleService;
@@ -34,6 +35,7 @@ public class BasicArticleController {
     @ApiImplicitParams({ @ApiImplicitParam(name = "page", value = "当前页码", required = false, dataType = "int"),
     @ApiImplicitParam(name = "rows", value = "每页条数", required = false, dataType = "int") })
     @RequestMapping(value = "/api/article", method = RequestMethod.GET)
+    @RequiresPermissions("article:view")//权限管理;
     public Response findAllArticle(Model model,
    @RequestParam(name = "page", defaultValue = "1") int page,
    @RequestParam(name = "rows", defaultValue = "10") int rows) {
@@ -47,6 +49,7 @@ public class BasicArticleController {
 
     @RequestMapping(value = "/api/article/find",method = RequestMethod.GET)
     @ApiImplicitParams({ @ApiImplicitParam(name = "id", value = "当前数据id", required = false, dataType = "Long") })
+    @RequiresPermissions("article:findId")//权限管理;
     public Response findById(Model model,@RequestParam(value = "id", required = true) Long id){
         BasicArticle article = basicArticleService.findById(id);
         return new Response().success(article);

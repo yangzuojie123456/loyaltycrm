@@ -44,6 +44,27 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+
+
+        <!-- thmleaf模板依赖. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>1.5.1.RELEASE</version>
+        </dependency>
+
+        <!-- shiro spring. -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <!-- shiro ehcache -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>1.2.2</version>
+        </dependency>
         <!--
                    包含支持UI模版（Velocity，FreeMarker，JasperReports），
                    邮件服务，
@@ -55,18 +76,14 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
         </dependency>
-
-        <!-- thmleaf模板依赖. -->
+        <!--thymleaf使用shiro标签
+        shiro权限框架，前端验证是为jsp设计的，其中的tag只能用于jsp系列的模板引擎。
+        最近项目使用了thymeleaf作为前端模板引擎，使用HTML文件，没法引入shiro的tag lib，
+        此时如果要使用shiro的话，可以引入 thymeleaf-extras-shiro.jar这个拓展包来曲线实现shiro的前端验证。-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-
-        <!-- shiro spring. -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.2.2</version>
+            <groupId>com.github.theborakompanioni</groupId>
+            <artifactId>thymeleaf-extras-shiro</artifactId>
+            <version>1.2.1</version>
         </dependency>
 
         <!-- 添加redis支持-->

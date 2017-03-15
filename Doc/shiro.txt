@@ -7,3 +7,123 @@
 (c) 身份认证
 
 (d) 权限控制
+1>第一就是开启shiro aop注解支持，这个只需要在com.kfit.config.shiro.ShiroConfiguration加入如下方法进行开启即可：
+/**
+     *  开启shiro aop注解支持.
+     *  使用代理方式;所以需要开启代码支持;
+     * @param securityManager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+       AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+       authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+       return authorizationAttributeSourceAdvisor;
+    }
+2>第二就是在controller方法中加入相应的注解：
+/**
+     * 用户添加;
+     * @return
+     */
+    @RequestMapping("/userAdd")
+    @RequiresPermissions("userInfo:add")//权限管理;
+    public String userInfoAdd(){
+       return "userInfoAdd";
+    }
+
+shiro注入缓存
+在ShiroConfiguration中加入如下方法：
+
+/**
+     * shiro缓存管理器;
+     * 需要注入对应的其它的实体类中：
+     * 1、安全管理器：securityManager
+     * 可见securityManager是整个shiro的核心；
+     * @return
+     */
+    @Bean
+    public EhCacheManager ehCacheManager(){
+       System.out.println("ShiroConfiguration.getEhCacheManager()");
+       EhCacheManager cacheManager = new EhCacheManager();
+       cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
+       returncacheManager;
+    }
+将缓存对象注入到SecurityManager中：
+
+@Bean
+    public SecurityManager securityManager(){
+       DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+       //设置realm.
+       securityManager.setRealm(myShiroRealm());
+
+       //注入缓存管理器;
+       securityManager.setCacheManager(ehCacheManager());//这个如果执行多次，也是同样的一个对象;
+
+       returnsecurityManager;
+    }
+
+(c)添加缓存配置文件：
+
+在src/main/resouces/config添加ehcache-shiro.xml配置文件：
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="es">
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <!--
+       name:缓存名称。
+       maxElementsInMemory:缓存最大数目
+       maxElementsOnDisk：硬盘最大缓存个数。
+       eternal:对象是否永久有效，一但设置了，timeout将不起作用。
+       overflowToDisk:是否保存到磁盘，当系统当机时
+       timeToIdleSeconds:设置对象在失效前的允许闲置时间（单位：秒）。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大。
+       timeToLiveSeconds:设置对象在失效前允许存活时间（单位：秒）。最大时间介于创建时间和失效时间之间。仅当eternal=false对象不是永久有效时使用，默认是0.，也就是对象存活时间无穷大。
+       diskPersistent：是否缓存虚拟机重启期数据 Whether the disk store persists between restarts of the Virtual Machine. The default value is false.
+       diskSpoolBufferSizeMB：这个参数设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区。
+       diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒。
+       memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）。
+        clearOnFlush：内存数量最大时是否清除。
+         memoryStoreEvictionPolicy:
+            Ehcache的三种清空策略;
+            FIFO，first in first out，这个是大家最熟的，先进先出。
+            LFU， Less Frequently Used，就是上面例子中使用的策略，直白一点就是讲一直以来最少被使用的。如上面所讲，缓存的元素有一个hit属性，hit值最小的将会被清出缓存。
+            LRU，Least Recently Used，最近最少使用的，缓存的元素有一个时间戳，当缓存容量满了，而又需要腾出地方来缓存新的元素的时候，那么现有缓存元素中时间戳离当前时间最远的元素将被清出缓存。
+    -->
+     <defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            overflowToDisk="false"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            />
+
+
+    <!-- 登录记录缓存锁定10分钟 -->
+    <cache name="passwordRetryCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
+</ehcache>
+
+ Shiro记住密码:
+ http://412887952-qq-com.iteye.com/blog/2299784
+
+
+
+ 问题1：如何在登录的时候加入验证码校验；
+http://blog.csdn.net/u014695188/article/details/52357379  http://blog.csdn.net/catoop/article/details/50501686（使用servlet @ServletComponentScan）
+ 问题2：如何在thymleaf使用shiro标签，比如：shiro:hasPermission；
+http://blog.csdn.net/u014695188/article/details/52356158
+ 问题3：如何限制密码输错3次就不能登录了；
+http://blog.csdn.net/u014695188/article/details/52356158
+ 问题4：如何编写无状态的过滤器；
+
+ 问题5：在同一个工程中如何有状态和无状态的过滤器同时并存；（这个问题博主还没解决哦，有谁知道怎么解决的，欢迎留言或者加QQ告知，不胜感激）。
