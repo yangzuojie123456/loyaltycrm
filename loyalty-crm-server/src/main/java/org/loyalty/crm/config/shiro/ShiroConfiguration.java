@@ -63,7 +63,8 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/logout", "logout");
         //验证码可以匿名访问
         filterChainDefinitionMap.put("/validatecodeServlet", "anon");
-
+        //druid 无登录访问
+        filterChainDefinitionMap.put("/druid2/*","anon");
 
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/index", "user");
