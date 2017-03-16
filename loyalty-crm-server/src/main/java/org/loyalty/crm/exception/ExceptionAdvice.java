@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartException;
 
 /**
  * Created by yangzuojie on 2017/3/9.
@@ -72,5 +73,14 @@ public class ExceptionAdvice {
     public Response handleException(DataIntegrityViolationException e) {
         logger.error("操作数据库出现异常:", e);
         return new Response().failure("操作数据库出现异常：字段重复、有外键关联等");
+    }
+
+    /**
+     * 文件上传失败异常处理
+     */
+    @ExceptionHandler(MultipartException.class)
+    public Response handleException(MultipartException e) {
+        logger.error("文件上传服务出现异常:", e);
+        return new Response().failure("文件上传服务出现异常:文件过大、传输过程出现异常等");
     }
 }

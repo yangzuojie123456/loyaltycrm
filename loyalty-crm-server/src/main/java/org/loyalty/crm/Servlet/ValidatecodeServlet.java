@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+/**
+ * 过滤器，监听器 配置方式如下：
+ * http://412887952-qq-com.iteye.com/blog/2292475
+ */
 @WebServlet(urlPatterns="/validatecodeServlet")
 public class ValidatecodeServlet extends HttpServlet{
     /**
