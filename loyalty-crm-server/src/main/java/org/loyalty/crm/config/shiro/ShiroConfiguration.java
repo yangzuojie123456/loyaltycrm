@@ -63,8 +63,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/logout", "logout");
         //验证码可以匿名访问
         filterChainDefinitionMap.put("/validatecodeServlet", "anon");
+        //filterChainDefinitionMap.put("/css/*.css", "anon");
+        //filterChainDefinitionMap.put("/js/*.js", "anon");
         //druid 无登录访问
-        filterChainDefinitionMap.put("/druid2/*","anon");
+        filterChainDefinitionMap.put("/druid/*","anon");
 
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/index", "user");
@@ -72,7 +74,8 @@ public class ShiroConfiguration {
 
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/**", "authc");
+        // 由 authc 转换为 anon ,是为了让druid可访问
+        filterChainDefinitionMap.put("/**", "anon");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/login");

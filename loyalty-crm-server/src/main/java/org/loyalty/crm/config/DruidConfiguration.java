@@ -15,7 +15,6 @@ import com.alibaba.druid.support.http.WebStatFilter;
  *
  * @author Administrator
  */
-
 @Configuration
 public class DruidConfiguration {
 
@@ -31,7 +30,7 @@ public class DruidConfiguration {
 
         //org.springframework.boot.context.embedded.ServletRegistrationBean提供类的进行注册.
 
-        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid2/*");
+        ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
 
 
         //添加初始化参数：initParams
@@ -47,7 +46,7 @@ public class DruidConfiguration {
 
         //登录查看信息的账号密码.
 
-        servletRegistrationBean.addInitParameter("loginUsername", "admin2");
+        servletRegistrationBean.addInitParameter("loginUsername", "admin");
 
         servletRegistrationBean.addInitParameter("loginPassword", "123456");
 
@@ -80,7 +79,7 @@ public class DruidConfiguration {
 
         //添加不需要忽略的格式信息.
 
-        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid2/*");
+        filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
 
         return filterRegistrationBean;
 

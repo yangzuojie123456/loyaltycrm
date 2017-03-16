@@ -7,12 +7,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * Spring Boot 应用启动类
- *
- *
- *
- *
- *、、
- *
  * Created by bysocket on 16/4/26.
  */
 // Spring Boot 应用的标识

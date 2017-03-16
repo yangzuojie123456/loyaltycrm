@@ -10,6 +10,9 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
+/**
+ * 密码错误次数验证。
+ */
 public class RetryLimitHashedCredentialsMatcher extends  HashedCredentialsMatcher{
     private Cache<String, AtomicInteger> passwordRetryCache;
 
